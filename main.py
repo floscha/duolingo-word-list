@@ -22,17 +22,22 @@ if __name__ == '__main__':
                            for word in sublist]
     print(flattened_word_list)
 
-    translations = [translator.translate(word).text.lower() for word in flattened_word_list]
+    translations = [translator.translate(word).text.lower()
+                    for word in flattened_word_list]
     print(translations)
 
-    script_section = '<script src="https://code.responsivevoice.org/responsivevoice.js"></script>'
-    page_template = (f'<header>{script_section}</header>' +
-                     '<body>%s</body>')
-    word_links = [f'<a onclick="responsiveVoice.speak(\'{word}\', \'Chinese Female\');" href="">{word}</a> - <a onclick="responsiveVoice.speak(\'{trans}\', \'UK English Female\');" href="">{trans}</a><br/>'
+    # Load templates.
+    with open('templates/page.html', 'r') as f:
+        page_template = f.read()
+    with open('templates/word.html', 'r') as f:
+        word_template = f.read()
+
+    word_links = [word_template.format_map({'word': word,
+                                            'translation': trans})
                   for word, trans in zip(flattened_word_list, translations)]
     joined_word_links = ' '.join(word_links)
 
-    full_page = page_template % joined_word_links
+    full_page = page_template.format(joined_word_links)
 
     with open('index.html', 'w') as f:
         f.write(full_page)
