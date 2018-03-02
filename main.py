@@ -1,8 +1,16 @@
+import sys
+
 from googletrans import Translator
 import requests
 
 
 if __name__ == '__main__':
+    args = sys.argv[1:]
+
+    if len(args) < 2:
+        print("usage: main.py lang lesson")
+        sys.exit(1)
+
     translator = Translator()
 
     # Read authorization token from file.
