@@ -11,6 +11,9 @@ if __name__ == '__main__':
         print("usage: main.py lang lesson")
         sys.exit(1)
 
+    learning_language = args[0]
+    lesson = args[1]
+
     translator = Translator()
 
     # Read authorization token from file.
@@ -19,10 +22,8 @@ if __name__ == '__main__':
 
     headers = {'Authorization': authorization}
     fields = 'skills%7BlessonWords%7D'
-    learning_language = 'zh'
-    url_name = 'Numbers-1'
     url = f'https://www.duolingo.com/2017-06-30/skills?fields={fields}' + \
-          f'&learningLanguage={learning_language}&urlName={url_name}'
+          f'&learningLanguage={learning_language}&urlName={lesson}'
     r = requests.get(url, headers=headers)
 
     nested_word_list = r.json()['skills'][0]['lessonWords']
