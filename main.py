@@ -11,6 +11,13 @@ def read_auth_token(file_name='auth.txt'):
     return auth_token
 
 
+def read_user_id(file_name='user.txt'):
+    """Read user ID from file."""
+    with open(file_name, 'r') as f:
+        user_id = f.read().strip()
+    return user_id
+
+
 def print_available_lessons(language):
     """
     Print all available lessons for the given language.
@@ -19,10 +26,7 @@ def print_available_lessons(language):
         allows retrieving lessons for the courses currently being learned.
     """
     authorization = read_auth_token()
-
-    # Read user ID from file.
-    with open('user.txt', 'r') as f:
-        user_id = f.read().strip()
+    user_id = read_user_id()
 
     headers = {'Authorization': authorization}
     fields = 'currentCourse'
