@@ -4,14 +4,49 @@ from googletrans import Translator
 import requests
 
 
+def print_available_lessons(language):
+    """
+    Print all available lessons for the given language.
+
+    ATTENTION: Currently does not work correctly since the Duolingo API only
+        allows retrieving lessons for the courses currently being learned.
+    """
+    # Read authorization token from file.
+    with open('auth.txt', 'r') as f:
+        authorization = f.read().strip()
+
+    # Read user ID from file.
+    with open('user.txt', 'r') as f:
+        user_id = f.read().strip()
+
+    headers = {'Authorization': authorization}
+    fields = 'currentCourse'
+    url = f'https://www.duolingo.com/2017-06-30/users/{user_id}' + \
+          f'?fields={fields}'
+    r = requests.get(url, headers=headers)
+
+    lessons = [lesson for level in r.json()['currentCourse']['skills']
+               for lesson in level]
+    lesson_names = [l['name'] for l in lessons]
+
+    print("Please choose one of the following lessons:")
+    for i, lesson in enumerate(lesson_names):
+        print("%d. %s" % (i + 1, lesson))
+
+
 if __name__ == '__main__':
     args = sys.argv[1:]
 
-    if len(args) < 2:
+    if len(args) == 0:
         print("usage: main.py lang lesson")
         sys.exit(1)
 
     learning_language = args[0]
+
+    if len(args) == 1:
+        print_available_lessons(learning_language)
+        sys.exit(0)
+
     lesson = args[1]
 
     translator = Translator()
