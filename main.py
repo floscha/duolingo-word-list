@@ -4,6 +4,13 @@ from googletrans import Translator
 import requests
 
 
+def read_auth_token(file_name='auth.txt'):
+    """Read authorization token from file."""
+    with open(file_name, 'r') as f:
+        auth_token = f.read().strip()
+    return auth_token
+
+
 def print_available_lessons(language):
     """
     Print all available lessons for the given language.
@@ -11,9 +18,7 @@ def print_available_lessons(language):
     ATTENTION: Currently does not work correctly since the Duolingo API only
         allows retrieving lessons for the courses currently being learned.
     """
-    # Read authorization token from file.
-    with open('auth.txt', 'r') as f:
-        authorization = f.read().strip()
+    authorization = read_auth_token()
 
     # Read user ID from file.
     with open('user.txt', 'r') as f:
@@ -51,9 +56,7 @@ if __name__ == '__main__':
 
     translator = Translator()
 
-    # Read authorization token from file.
-    with open('auth.txt', 'r') as f:
-        authorization = f.read().strip()
+    authorization = read_auth_token()
 
     headers = {'Authorization': authorization}
     fields = 'skills%7BlessonWords%7D'
