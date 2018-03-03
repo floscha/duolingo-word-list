@@ -91,8 +91,6 @@ if __name__ == '__main__':
 
     if len(args) == 1:
         print_available_lessons(learning_language)
-        sys.exit(0)
-
-    lesson = args[1]
-
-    create_word_page(lesson)
+    else:
+        lesson = args[1]
+        create_word_page(lesson)
