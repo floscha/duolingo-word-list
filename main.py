@@ -43,21 +43,7 @@ def print_available_lessons(language):
         print("%d. %s" % (i + 1, lesson))
 
 
-if __name__ == '__main__':
-    args = sys.argv[1:]
-
-    if len(args) == 0:
-        print("usage: main.py lang lesson")
-        sys.exit(1)
-
-    learning_language = args[0]
-
-    if len(args) == 1:
-        print_available_lessons(learning_language)
-        sys.exit(0)
-
-    lesson = args[1]
-
+def create_word_page(lesson_name, output_file='index.html'):
     translator = Translator()
 
     authorization = read_auth_token()
@@ -65,7 +51,7 @@ if __name__ == '__main__':
     headers = {'Authorization': authorization}
     fields = 'skills%7BlessonWords%7D'
     url = f'https://www.duolingo.com/2017-06-30/skills?fields={fields}' + \
-          f'&learningLanguage={learning_language}&urlName={lesson}'
+          f'&learningLanguage={learning_language}&urlName={lesson_name}'
     r = requests.get(url, headers=headers)
 
     nested_word_list = r.json()['skills'][0]['lessonWords']
@@ -90,5 +76,23 @@ if __name__ == '__main__':
 
     full_page = page_template.format(joined_word_links)
 
-    with open('index.html', 'w') as f:
+    with open(output_file, 'w') as f:
         f.write(full_page)
+
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+
+    if len(args) == 0:
+        print("usage: main.py lang lesson")
+        sys.exit(1)
+
+    learning_language = args[0]
+
+    if len(args) == 1:
+        print_available_lessons(learning_language)
+        sys.exit(0)
+
+    lesson = args[1]
+
+    create_word_page(lesson)
