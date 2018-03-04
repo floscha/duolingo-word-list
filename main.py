@@ -73,7 +73,9 @@ def create_word_page(lesson_name, output_file='index.html'):
                   for word, trans in zip(flattened_word_list, translations)]
     joined_word_links = ' '.join(word_links)
 
-    full_page = page_template.format(joined_word_links)
+    full_page = page_template.format_map(
+        {'learning_language': learning_language,
+         'content': joined_word_links})
 
     with open(output_file, 'w') as f:
         f.write(full_page)
