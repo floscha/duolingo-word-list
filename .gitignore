@@ -1,6 +1,5 @@
 .idea
 venv
 
-auth.txt
-user.txt
+config.yml
 index.html
