@@ -2,20 +2,19 @@ import sys
 
 from googletrans import Translator
 import requests
+import yaml
 
 
-def read_auth_token(file_name='auth.txt'):
-    """Read authorization token from file."""
+def read_config(file_name='config.yml'):
+    """Read configuration from YAML file.
+
+    Configuration currently contains:
+        - User ID ('user_id')
+        - Authorization token ('auth')
+    """
     with open(file_name, 'r') as f:
-        auth_token = f.read().strip()
-    return auth_token
-
-
-def read_user_id(file_name='user.txt'):
-    """Read user ID from file."""
-    with open(file_name, 'r') as f:
-        user_id = f.read().strip()
-    return user_id
+        configuration = yaml.load(f)
+    return configuration
 
 
 def print_available_lessons(language):
@@ -25,8 +24,8 @@ def print_available_lessons(language):
     ATTENTION: Currently does not work correctly since the Duolingo API only
         allows retrieving lessons for the courses currently being learned.
     """
-    authorization = read_auth_token()
-    user_id = read_user_id()
+    authorization = config['auth']
+    user_id = config['user_id']
 
     headers = {'Authorization': authorization}
     fields = 'currentCourse'
@@ -46,7 +45,7 @@ def print_available_lessons(language):
 def create_word_page(lesson_name, output_file='index.html'):
     translator = Translator()
 
-    authorization = read_auth_token()
+    authorization = config['auth']
 
     headers = {'Authorization': authorization}
     fields = 'skills%7BlessonWords%7D'
@@ -86,6 +85,8 @@ if __name__ == '__main__':
     if len(args) == 0:
         print("usage: main.py lang lesson")
         sys.exit(1)
+
+    config = read_config()
 
     learning_language = args[0]
 
