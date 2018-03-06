@@ -42,9 +42,7 @@ def print_available_lessons(language):
         print("%d. %s" % (i + 1, lesson))
 
 
-def create_word_page(lesson_name, output_file='index.html'):
-    translator = Translator()
-
+def get_lessons_words(lesson_name):
     authorization = config['auth']
 
     headers = {'Authorization': authorization}
@@ -56,10 +54,16 @@ def create_word_page(lesson_name, output_file='index.html'):
     nested_word_list = r.json()['skills'][0]['lessonWords']
     flattened_word_list = [word for sublist in nested_word_list
                            for word in sublist]
+
     print(flattened_word_list)
+    return flattened_word_list
+
+
+def create_word_page(words, output_file='index.html'):
+    translator = Translator()
 
     translations = [translator.translate(word).text.lower()
-                    for word in flattened_word_list]
+                    for word in words]
     print(translations)
 
     # Load templates.
@@ -70,7 +74,7 @@ def create_word_page(lesson_name, output_file='index.html'):
 
     word_links = [word_template.format_map({'word': word,
                                             'translation': trans})
-                  for word, trans in zip(flattened_word_list, translations)]
+                  for word, trans in zip(words, translations)]
     joined_word_links = ' '.join(word_links)
 
     full_page = page_template.format_map(
@@ -96,4 +100,5 @@ if __name__ == '__main__':
         print_available_lessons(learning_language)
     else:
         lesson = args[1]
-        create_word_page(lesson)
+        words = get_lessons_words(lesson)
+        create_word_page(words)
