@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <title>Duolingo Word List</title>
     <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 </head>
 <body>
-    <script>
-        var learning_language = '{learning_language}';
-        switch (learning_language) {{
-            case 'zh':
-                voice = 'Chinese Female';
-                break;
-            case 'fr':
-                voice = "French Female";
-                break;
-        }}
-    </script>
-    {content}
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script>
+                    var learning_language = '{learning_language}';
+                    switch (learning_language) {{
+                        case 'zh':
+                            voice = 'Chinese Female';
+                            break;
+                        case 'fr':
+                            voice = "French Female";
+                            break;
+                    }}
+                </script>
+                {content}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
