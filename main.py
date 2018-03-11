@@ -51,7 +51,11 @@ def get_lessons_words(lesson_name):
           f'&learningLanguage={learning_language}&urlName={lesson_name}'
     r = requests.get(url, headers=headers)
 
-    nested_word_list = r.json()['skills'][0]['lessonWords']
+    try:
+        nested_word_list = r.json()['skills'][0]['lessonWords']
+    except Exception:
+        raise Exception("Lesson not found")
+
     flattened_word_list = [word for sublist in nested_word_list
                            for word in sublist]
 
