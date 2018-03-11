@@ -10,28 +10,32 @@
 </head>
 <body>
     <div class="container">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Word</th>
-                    <th>Translation</th>
-                </tr>
-            </thead>
-            <tbody>
-                <script>
-                    var learning_language = '{learning_language}';
-                    switch (learning_language) {{
-                        case 'zh':
-                            voice = 'Chinese Female';
-                            break;
-                        case 'fr':
-                            voice = "French Female";
-                            break;
-                    }}
-                </script>
-                {content}
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Translation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <script>
+                            var learning_language = '{learning_language}';
+                            switch (learning_language) {{
+                                case 'zh':
+                                    voice = 'Chinese Female';
+                                    break;
+                                case 'fr':
+                                    voice = "French Female";
+                                    break;
+                            }}
+                        </script>
+                        {content}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>
