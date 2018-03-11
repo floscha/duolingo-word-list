@@ -78,7 +78,8 @@ def create_word_page(words, output_file='index.html'):
     joined_word_links = ' '.join(word_links)
 
     full_page = page_template.format_map(
-        {'learning_language': learning_language,
+        {'lesson': lesson,
+         'learning_language': learning_language,
          'content': joined_word_links})
 
     with open(output_file, 'w') as f:
