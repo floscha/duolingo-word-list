@@ -38,8 +38,8 @@ def print_available_lessons(language):
     lesson_names = [l['name'] for l in lessons]
 
     print("Please choose one of the following lessons:")
-    for i, lesson in enumerate(lesson_names):
-        print("%d. %s" % (i + 1, lesson))
+    for i, lesson in enumerate(lesson_names, start=1):
+        print("%d. %s" % (i, lesson))
 
 
 def get_lessons_words(lesson_name):
