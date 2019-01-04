@@ -11,7 +11,7 @@ Simple script that creates an HTML page containing all words from a Duolingo les
 ```
 $ pip install -r dependencies.txt
 ```
-3. Create an _auth.txt_ file in the root folder and copy your authorization token into the file.
+3. Replace the placeholders in _config.yml_ with your email and authorization token.
 4. Run the _main.py_:
 ```
 $ python main.py
